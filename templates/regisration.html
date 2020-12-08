@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+{% block title %} Регистрация {% endblock %}
 
-<head>
-    <meta charset=UTF-8">
+{% block body %}
 
-    <title>Регистрация</title>
-    <style>body {
+    <link rel="stylesheet" href="static/css/home.css">
+</head>
+<style> body {
   height: 100%;
 }
 body {
@@ -130,11 +130,8 @@ h6 {
   margin: 0;
   padding-top: 10px;
 }</style>
-    <link rel="stylesheet" href="static/css/home.css">
-</head>
-
 <body>
-    <p class="logo"> <img src="img/logo.png" width="395" height="170"></p>
+    <p class="logo"> <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF_%D0%9D%D0%93%D0%A2%D0%A3_%D0%9D%D0%AD%D0%A2%D0%98.png" width="395" height="170"></p>
     
 
    <form action="" class="ui-form">
@@ -151,5 +148,7 @@ h6 {
   <p><input type="submit" value="Зарегистрироваться"></p>
 </form>
 </body>
+{% endblock %}
+
 
 </html>

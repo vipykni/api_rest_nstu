@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
-{% block title %} NSTU {% endblock %}
+{% block title %} Преподователи {% endblock %}
 
-    {% block body %}
-
-    <link rel="stylesheet" href="static/css/home.css">
-</head>
-
-<div class="layer1">  </div>
-<style>
+{% block body %}
+<div class="container mt-5">
+    <h3>Teachers</h3>
+    {% for el in teacher_list %}
+    <style>
    .layer1 {
     position: relative;
     height: 500px;
@@ -128,17 +126,13 @@ nav{
             left: 100%;
             top:0;
           }
-          </style>
+</style>
+    <div class="alert alert-info">
+        <h2>
+            {{ el.name }}
+        </h2>
+    </div>
+    {% endfor %}
 
-   <div class="layer2"> </div>
-    <p class="logo"> <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF_%D0%9D%D0%93%D0%A2%D0%A3_%D0%9D%D0%AD%D0%A2%D0%98.png" width="790" height="340"></p>
-	<nav role='navigation'>
-  <ul>
-    <li><a href="facult.html">Факультеты</a></li>
-    <li><a href="teachers.html">Преподователи</a></li>
-    <li><a href="regisration.html">Регистрация</a></li>
-    <li><a href="authorization.html">Вход</a></li>
-  </ul>
-</nav>  
-
+</div>
 {% endblock %}
