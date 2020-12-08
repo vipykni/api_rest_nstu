@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 import random
 from datetime import datetime
+import sqlite3
+from base import (User, Log, Teacher, TeacherShedule, Group, Structure, Level, Faculty, Auditory, Corpus, Day, Time)
 
 
 # connection
@@ -12,14 +14,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-def __repr__(self):
-    return 'Shedule %r' % self.id
-
 
 @app.route('/')
 def home():
     return render_template("home.html")
 
+@app.route('/user/<string:name>/<int:id>')
+def user(name,id):
+    return "User Page " + name + " - " + str(id)
 
 @app.route('/regisration', methods=['POST','GET'])
 def register():
@@ -44,6 +46,28 @@ def authorization():
         print(password)
         print(token)
     return render_template("authorization.html")
+@app.route('/teachers', methods=['GET', 'POST'])
+def teachers():
+    if request.method == "GET":
+        print('Get method')
+        teacher_list = Teacher.query.order_by(Teacher.id).all()
+        print(teacher_list[0].name)
+    else:
+        print("Post method")
+
+    return render_template('teachers.html', teacher_list=teacher_list)
+
+@app.route('/facult', methods=['POST','GET'])
+def facult():
+    if request.method == "GET":
+        print('Get method')
+        Faculty_list = Faculty.query.order_by(Faculty.id).all()
+        print(Faculty_list[0].name)
+    else:
+        print("Post method")
+
+    return render_template('facult.html', Faculty_list=Faculty_list)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
