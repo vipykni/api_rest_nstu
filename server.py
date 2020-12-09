@@ -29,11 +29,16 @@ def register():
         name = request.form['name']
         login = request.form['login']
         password = request.form['password']
-        token = random.getrandbits(128)
-        print(name)
-        print(login)
-        print(password)
-        print(token)
+        token = hashlib.md5(bytes(random.randint(1, 10000000))).hexdigest()
+        expiration = (datetime.now() + timedelta(days=30))
+        user_id = int(User.query.order_by(User.id.desc()).first().id) + 1
+        newUser = User(id=user_id, name=name, login=login, password=password, token=token,  expiration=expiration)
+        try:
+            db.session.add(newUser)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return print("При добавлении возникла ошибка")
     return render_template("regisration.html")
 
 @app.route('/authorization', methods=['POST','GET'])
@@ -65,8 +70,8 @@ def facult():
         print(Faculty_list[0].name)
     else:
         print("Post method")
-
     return render_template('facult.html', Faculty_list=Faculty_list)
+
 
 
 if __name__ == "__main__":
