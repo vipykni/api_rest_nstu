@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 import random
+import hashlib
 from datetime import datetime
 import sqlite3
 from base import (User, Log, Teacher, TeacherShedule, Group, Structure, Level, Faculty, Auditory, Corpus, Day, Time)
@@ -41,16 +42,36 @@ def register():
             return print("При добавлении возникла ошибка")
     return render_template("regisration.html")
 
+def auth(ulogin, upassword):
+    user_list = User.query.order_by(User.id).all()
+    user_password = None
+    for el in user_list:
+        if ulogin == el.login:
+            user_password = el.password
+            break
+    else:
+        print('Login Failed')
+    if upassword == user_password:
+        print('Login Succsess')
+    return
+
+
+def userReg(login):
+    user_list = User.query.order_by(User.id).all()
+    for el in user_list:
+        if login != el.login:
+            return False
+    return True
+
 @app.route('/authorization', methods=['POST','GET'])
 def authorization():
     if request.method == "POST":
         login = request.form['login']
         password = request.form['password']
-        token = random.getrandbits(128)
-        print(login)
-        print(password)
-        print(token)
+        auth(login, password)
+
     return render_template("authorization.html")
+
 @app.route('/teachers', methods=['GET', 'POST'])
 def teachers():
     if request.method == "GET":
